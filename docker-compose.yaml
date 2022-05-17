@@ -4,9 +4,20 @@ services:
   polkadot:
     image: parity/polkadot
     container_name: polkadot
+    user: root
     ports:
-      - "9944:9944"
-      - "9615:9615"
+      - 9933:9933 # rpc port
+      - 9944:9944 # ws port
+      - 30333:30333 # p2p port
     restart: always
     volumes:
       - ./data:/polkadot
+    command:
+      [
+        "--name",
+        "PolkaDocker",
+        "--ws-external",
+        "--rpc-external",
+        "--rpc-cors",
+        "all"
+      ]
